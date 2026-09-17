@@ -1,0 +1,14 @@
+{
+  "name": "eticalab-equilibrium-website",
+  "version": "1.0.0",
+  "description": "Etica_Lab.Equilibrium — multilingual static site (migrated from Webnode)",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

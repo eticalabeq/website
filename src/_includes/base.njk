@@ -1,0 +1,79 @@
+{% macro navlist(lang, currentRef, all, site) %}
+<ul class="mainnav__list">
+  {%- for ref in site.navOrder -%}
+    {%- set p = all | findVersion(ref, lang) -%}
+    {%- if p -%}
+      <li><a href="{{ p.url }}"{% if ref == currentRef %} class="is-active" aria-current="page"{% endif %}>{{ site.navLabels[lang][ref] }}</a></li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+{% endmacro %}
+
+{% macro langbar(lang, currentRef, all, site) %}
+<div class="langbar" role="navigation" aria-label="{{ site.ui[lang].switchLang }}">
+  {%- for l in site.languages -%}
+    {%- set v = all | findVersion(currentRef, l.code) -%}
+    {%- if l.code == lang -%}
+      <span class="is-active" aria-current="true">{{ l.code | upper }}</span>
+    {%- elif v -%}
+      <a href="{{ v.url }}" hreflang="{{ l.code }}" title="{{ l.name }}">{{ l.code | upper }}</a>
+    {%- else -%}
+      {%- set hp = all | findVersion('home', l.code) -%}
+      {%- if hp -%}<a href="{{ hp.url }}" hreflang="{{ l.code }}" title="{{ l.name }}" class="is-missing">{{ l.code | upper }}</a>
+      {%- else -%}<span class="is-missing" title="{{ l.name }}">{{ l.code | upper }}</span>{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+{% endmacro %}
+
+{%- set homePage = collections.all | findVersion('home', lang) -%}
+{%- set homeUrl = homePage.url if homePage else ('/' + lang + '/') -%}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title and title != site.name %}{{ title }} — {{ site.name }}{% else %}{{ site.name }}{% endif %}</title>
+  <meta name="description" content="{{ description | default('') }}">
+  <meta property="og:title" content="{{ title | default(site.name) }}">
+  <meta property="og:description" content="{{ description | default('') }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/img/hero-home.webp">
+  <meta name="robots" content="index,follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+  <!-- Compact bar that slides in on scroll -->
+  <div class="stickynav" id="stickynav">
+    <div class="stickynav__inner">
+      <nav class="mainnav" aria-label="{{ site.name }}">{{ navlist(lang, ref, collections.all, site) }}</nav>
+      {{ langbar(lang, ref, collections.all, site) }}
+    </div>
+  </div>
+
+  <header class="masthead">
+    {{ langbar(lang, ref, collections.all, site) }}
+    <a class="masthead__logo" href="{{ homeUrl }}" aria-label="{{ site.name }}">
+      <img src="/assets/img/logo.webp" alt="{{ site.name }}" width="150">
+    </a>
+    <a href="{{ homeUrl }}"><h1 class="masthead__title">Etica_Lab</h1></a>
+    <p class="masthead__subtitle">Equilibrium</p>
+    <nav class="mainnav" aria-label="{{ site.name }}">{{ navlist(lang, ref, collections.all, site) }}</nav>
+  </header>
+
+  <main>
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <p>{{ site.ui[lang].imagesBy }} <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a></p>
+    <p>&copy; {{ site.name }} — {{ site.region }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  </footer>
+
+  <script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

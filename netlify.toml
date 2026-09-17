@@ -1,0 +1,15 @@
+# Netlify build & deploy configuration
+# GitHub push -> Netlify auto-builds with Eleventy -> publishes the _site folder.
+
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Send the bare domain root to the Spanish site (the site's default language).
+[[redirects]]
+  from = "/"
+  to = "/es/"
+  status = 302

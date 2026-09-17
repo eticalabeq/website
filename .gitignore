@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Eleventy build output (Netlify rebuilds this on deploy)
+_site/
+
+# OS / editor cruft
+.DS_Store
+*.log
+npm-debug.log*
+.cache/
