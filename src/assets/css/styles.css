@@ -219,18 +219,15 @@ hr, hr.rule {
   object-fit: cover;
 }
 
-/* Homepage: full-height banquet hero. Fills the first screen below the
-   masthead so the next section only appears after scrolling. */
+/* Homepage: the mauve hero section fills the first screen below the masthead,
+   with the banquet banner kept at its original size, centred within it. So the
+   next section only appears after scrolling. */
 .banner--hero {
-  padding: 0;
-}
-.banner--hero img {
-  max-width: none;
-  width: 100%;
-  height: calc(100vh - 300px);
-  min-height: 460px;
-  aspect-ratio: auto;
-  object-fit: cover;
+  min-height: calc(100vh - 300px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
 }
 
 /* Full-bleed photo band with centered overlay text. */
