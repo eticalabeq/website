@@ -1,0 +1,178 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'home' | purl(L.code) }}"
+layout: proto.njk
+pref: home
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set h = t.home -%}
+
+<section class="hero">
+  <div class="hero__media" data-parallax="0.28">
+    <div class="hero__img" style="background-image:url('/assets/img/hero-home.webp')"></div>
+    <div class="hero__grain"></div>
+  </div>
+  <div class="hero__inner">
+    <p class="kicker kicker--light reveal" data-reveal>{{ h.kicker }}</p>
+    <h1 class="hero__title reveal" data-reveal data-delay="1">{{ h.titleHtml | safe }}</h1>
+    <p class="hero__lead reveal" data-reveal data-delay="2">{{ h.lead }}</p>
+    <div class="hero__actions reveal" data-reveal data-delay="3">
+      <a class="btn btn--solid" href="{{ 'retreats' | purl(lang) }}">{{ h.ctaPrimary }}</a>
+      <a class="btn btn--ghost" href="{{ 'contact' | purl(lang) }}">{{ h.ctaSecondary }}</a>
+    </div>
+  </div>
+  <a href="#filosofia" class="hero__scroll" aria-label="{{ t.ui.scroll }}"><span></span>{{ t.ui.scroll }}</a>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {%- for round in [1, 2] %}{% for word in h.marquee %}<span>{{ word }}</span><i>✦</i>{% endfor %}{% endfor %}
+  </div>
+</div>
+
+<section class="section philosophy" id="filosofia">
+  <div class="wrap philosophy__grid">
+    <div class="philosophy__media reveal" data-reveal>
+      <img src="/assets/img/image-crop-1bsl6q-1.webp" alt="">
+      <div class="philosophy__badge">{{ h.philo.badgeHtml | safe }}</div>
+    </div>
+    <div class="philosophy__text">
+      <p class="kicker reveal" data-reveal>{{ h.philo.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ h.philo.title }}</h2>
+      <p class="lead reveal" data-reveal data-delay="2">{{ h.philo.lead }}</p>
+      <p class="reveal" data-reveal data-delay="3">{{ h.philo.question }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section about">
+  <div class="wrap about__grid">
+    <div class="about__portrait reveal" data-reveal>
+      <img src="/assets/img/167010050_214079807136042_3879363262381485551_n.webp" alt="Elisenda Ferrús Rull">
+      <span class="about__sig">Elisenda</span>
+    </div>
+    <div class="about__text">
+      <p class="kicker reveal" data-reveal>{{ h.about.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ h.about.title }}</h2>
+      <p class="lead reveal" data-reveal data-delay="2">{{ h.about.lead }}</p>
+      {% include "proto-stats.njk" %}
+      <a class="link-arrow reveal" data-reveal data-delay="4" href="{{ 'about' | purl(lang) }}">{{ h.about.link }} <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section services">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="kicker reveal" data-reveal>{{ h.services.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ h.services.title }}</h2>
+    </div>
+    {%- set cardImgs = ['A7_03459.webp', '1o0geh.jpg', 'A7_03448.webp', 'A7_09733.webp'] %}
+    <div class="cards">
+      {%- for c in h.services.cards %}
+      <a class="card reveal" data-reveal data-delay="{{ loop.index0 }}" href="{{ 'services' | purl(lang) }}">
+        <div class="card__img" style="background-image:url('/assets/img/{{ cardImgs[loop.index0] }}')"></div>
+        <div class="card__body">
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.text }}</p>
+          <span class="card__tag">{{ c.tag }}</span>
+        </div>
+      </a>
+      {%- endfor %}
+    </div>
+    <p class="section__more reveal" data-reveal><a class="link-arrow" href="{{ 'services' | purl(lang) }}">{{ h.services.link }} <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+  </div>
+</section>
+
+<section class="section retreats">
+  <div class="wrap retreats__head">
+    <div>
+      <p class="kicker kicker--light reveal" data-reveal>{{ h.retreats.kicker }}</p>
+      <h2 class="display display--light reveal" data-reveal data-delay="1">{{ h.retreats.title }}</h2>
+    </div>
+    <p class="retreats__intro reveal" data-reveal data-delay="2">{{ h.retreats.intro }}</p>
+  </div>
+  <div class="gallery-scroll reveal" data-reveal>
+    {%- for img in ['lesclosanes_set23-00107.webp', 'closanes-06497.webp', 'lesclosanes_set23-00363.webp', 'lesclosanes_set23-09762.webp', 'closanes-06521.webp', 'lesclosanes_set23-00438.webp', 'lesclosanes_set23-09862.webp'] %}
+    <img src="/assets/img/{{ img }}" alt="Masia les Closanes" loading="lazy">
+    {%- endfor %}
+  </div>
+  <div class="wrap next-retreat reveal" data-reveal>
+    <div>
+      <span class="next-retreat__label">{{ h.retreats.nextLabel }}</span>
+      <h3>{{ h.retreats.nextTitle }}</h3>
+    </div>
+    <div class="next-retreat__actions">
+      <a class="btn btn--ghost" href="{{ 'retreats' | purl(lang) }}">{{ h.retreats.more }}</a>
+      <a class="btn btn--solid btn--terra" href="{{ 'contact' | purl(lang) }}">{{ h.retreats.cta }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="quoteband" data-parallax-bg="/assets/img/mvv-cover.jpg">
+  <div class="wrap quoteband__inner">
+    <p class="reveal" data-reveal>{{ h.quote.html | safe }}</p>
+    <cite class="reveal" data-reveal data-delay="1">— {{ h.quote.cite }}</cite>
+  </div>
+</section>
+
+<section class="section values">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="kicker reveal" data-reveal>{{ h.values.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ h.values.title }}</h2>
+    </div>
+    {%- set valueImgs = ['0hamon.jpg', 'value-connection.jpg', 'value-relationships.jpg', 'value-art.jpg', 'value-environment.png', 'value-spirituality.jpg'] %}
+    <div class="values__grid">
+      {%- for v in h.values.items %}
+      <article class="value reveal" data-reveal style="--i:{{ loop.index0 }}">
+        <div class="value__img" style="background-image:url('/assets/img/{{ valueImgs[loop.index0] }}')"></div>
+        <h3>{{ v.title }}</h3><p>{{ v.text }}</p>
+      </article>
+      {%- endfor %}
+    </div>
+    <p class="section__more reveal" data-reveal><a class="link-arrow" href="{{ 'values' | purl(lang) }}">{{ h.values.link }} <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+  </div>
+</section>
+
+<section class="section pricing">
+  <div class="wrap pricing__grid">
+    <div class="pricing__intro">
+      <p class="kicker reveal" data-reveal>{{ h.pricing.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ h.pricing.title }}</h2>
+      <p class="lead reveal" data-reveal data-delay="2">{{ h.pricing.leadHtml | safe }}</p>
+      <a class="link-arrow reveal" data-reveal data-delay="3" href="{{ 'services' | purl(lang) }}">{{ h.pricing.link }} <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="pricing__list">
+      {%- for p in h.pricing.items %}
+      <div class="price reveal" data-reveal data-delay="{{ loop.index0 }}"><div><h4>{{ p.title }}</h4><p>{{ p.sub }}</p></div><b>{{ p.price }}{% if p.unit %}<small>{{ p.unit }}</small>{% endif %}</b></div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section contact" data-parallax-bg="/assets/img/terrace-contact.jpeg">
+  <div class="contact__overlay"></div>
+  <div class="wrap contact__inner">
+    <p class="kicker kicker--light reveal" data-reveal>{{ h.contact.kicker }}</p>
+    <h2 class="display display--light reveal" data-reveal data-delay="1">{{ h.contact.titleHtml | safe }}</h2>
+    <p class="contact__lead reveal" data-reveal data-delay="2">{{ h.contact.lead }}</p>
+    <div class="reveal" data-reveal data-delay="3">
+      {%- set formVariant = 'dark' %}
+      {% include "proto-form.njk" %}
+    </div>
+    <div class="contact__details reveal" data-reveal data-delay="4">
+      <a href="mailto:{{ proto.config.email }}">{{ proto.config.email }}</a>
+      <span>·</span>
+      <a href="{{ proto.config.phoneHref }}">{{ proto.config.phone }}</a>
+      <span>·</span>
+      <span>{{ t.contact.location }}</span>
+    </div>
+  </div>
+</section>

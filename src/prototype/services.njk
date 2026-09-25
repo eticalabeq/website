@@ -1,0 +1,75 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'services' | purl(L.code) }}"
+layout: proto.njk
+pref: services
+ctaBand: true
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set s = t.services -%}
+{%- set ph = { "kicker": s.kicker, "title": s.title, "lead": s.lead } -%}
+{%- set heroImg = 'A7_03441.webp' -%}
+{% include "proto-pagehero.njk" %}
+
+<section class="section rows">
+  <div class="wrap">
+    {%- set rowImgs = ['A7_03459.webp', '1o0geh.jpg', 'A7_03448.webp', 'A7_09733.webp'] %}
+    {%- for r in s.rows %}
+    <article class="row{% if loop.index0 % 2 %} row--flip{% endif %}">
+      <div class="row__media reveal" data-reveal>
+        <img src="/assets/img/{{ rowImgs[loop.index0] }}" alt="{{ r.title }}" loading="lazy">
+      </div>
+      <div class="row__text">
+        <span class="row__num reveal" data-reveal>0{{ loop.index }}</span>
+        <h2 class="row__title reveal" data-reveal data-delay="1">{{ r.title }}</h2>
+        <span class="row__tag reveal" data-reveal data-delay="1">{{ r.tag }}</span>
+        <p class="reveal" data-reveal data-delay="2">{{ r.text }}</p>
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+
+<section class="section pricing pricing--full" id="valor">
+  <div class="wrap pricing__grid pricing__grid--top">
+    <div class="pricing__intro pricing__intro--sticky">
+      <p class="kicker reveal" data-reveal>{{ s.pricing.kicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ s.pricing.title }}</h2>
+      <blockquote class="etym reveal" data-reveal data-delay="2">{{ s.pricing.quoteHtml | safe }}</blockquote>
+    </div>
+    <div class="pricing__detail">
+      {%- for p in s.pricing.items %}
+      <div class="pdetail reveal" data-reveal>
+        <div class="pdetail__head">
+          <h3>{{ p.title }}</h3>
+          {%- if p.link %}
+          <a class="pdetail__price pdetail__price--link" href="{{ p.link | purl(lang) }}">{{ p.price }} →</a>
+          {%- else %}
+          <span class="pdetail__price">{{ p.price }}</span>
+          {%- endif %}
+        </div>
+        <p>{{ p.text }}</p>
+      </div>
+      {%- endfor %}
+      <div class="pdetail__closing reveal" data-reveal>
+        {%- for c in s.pricing.closing %}
+        <p>{{ c }}</p>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section freeband">
+  <div class="wrap freeband__inner">
+    <p class="kicker kicker--light reveal" data-reveal>{{ s.free.kicker }}</p>
+    <h2 class="display display--light reveal" data-reveal data-delay="1">{{ s.free.title }}</h2>
+    <p class="freeband__text reveal" data-reveal data-delay="2">{{ s.free.text }}</p>
+  </div>
+</section>

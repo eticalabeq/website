@@ -23,6 +23,14 @@ module.exports = function (eleventyConfig) {
     return all.filter((p) => p.data.ref === ref);
   });
 
+  // --- Design prototype (/prototype/) ------------------------------------
+  // URL of a prototype page (by its `pref`) in a given language.
+  const protoConfig = require("./src/_data/proto/config.js");
+  eleventyConfig.addFilter("purl", (pref, code) => {
+    const slug = protoConfig.slugs[code][pref];
+    return `/prototype/${code}/` + (slug ? `${slug}/` : "");
+  });
+
   return {
     dir: {
       input: "src",

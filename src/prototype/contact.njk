@@ -1,0 +1,47 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'contact' | purl(L.code) }}"
+layout: proto.njk
+pref: contact
+ctaBand: false
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set c = t.contact -%}
+{%- set ph = { "kicker": c.kicker, "title": c.title, "lead": c.lead } -%}
+{%- set heroImg = 'terrace-contact.jpeg' -%}
+{% include "proto-pagehero.njk" %}
+
+<section class="section contactpage" id="formulario">
+  <div class="wrap contactpage__grid">
+    <div class="contactpage__form reveal" data-reveal>
+      <h2 class="display">{{ c.formTitle }}</h2>
+      <p class="lead">{{ c.formText }}</p>
+      {%- set formVariant = 'light' %}
+      {% include "proto-form.njk" %}
+    </div>
+    <aside class="contactpage__details reveal" data-reveal data-delay="1">
+      <h3>{{ c.detailsTitle }}</h3>
+      <ul class="dlist">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <span><b>Etica_Lab.Equilibrium</b><br>{{ c.location }}</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.3a1 1 0 0 1 1 1c0 1.2.2 2.4.56 3.5a1 1 0 0 1-.24 1Z"/></svg>
+          <a href="{{ proto.config.phoneHref }}">{{ proto.config.phone }}</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <a href="mailto:{{ proto.config.email }}">{{ proto.config.email }}</a>
+        </li>
+      </ul>
+      <div class="contactpage__img"><img src="/assets/img/A7_03441.webp" alt="" loading="lazy"></div>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,97 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'retreats' | purl(L.code) }}"
+layout: proto.njk
+pref: retreats
+ctaBand: false
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set r = t.retreats -%}
+{%- set ph = { "kicker": r.kicker, "title": r.title, "lead": r.lead } -%}
+{%- set heroImg = 'A7_03466.webp' -%}
+{% include "proto-pagehero.njk" %}
+
+<section class="section intro-big">
+  <div class="wrap">
+    <p class="intro-big__text reveal" data-reveal>{{ r.intro }}</p>
+  </div>
+</section>
+
+<section class="section team">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="kicker reveal" data-reveal>{{ r.teamKicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ r.teamTitle }}</h2>
+    </div>
+    {%- set teamImgs = ['158208192_247740043677648_8021159241411345687_n.webp', 'emilio-portrait.webp'] %}
+    <div class="team__grid">
+      {%- for m in r.team %}
+      <article class="person reveal" data-reveal data-delay="{{ loop.index0 }}">
+        <div class="person__img"><img src="/assets/img/{{ teamImgs[loop.index0] }}" alt="{{ m.name }}" loading="lazy"></div>
+        <h3>{{ m.name }}</h3>
+        <ul class="chips">
+          {%- for role in m.roles %}<li>{{ role }}</li>{% endfor %}
+        </ul>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap"><p class="statement__text reveal" data-reveal>{{ r.statement }}</p></div>
+</section>
+
+<section class="section venue">
+  <div class="wrap venue__head">
+    <div>
+      <p class="kicker reveal" data-reveal>{{ r.nextKicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ r.nextTitle }}</h2>
+    </div>
+    <a class="btn btn--solid reveal" data-reveal data-delay="2" href="{{ 'contact' | purl(lang) }}">{{ r.cta }}</a>
+  </div>
+  <div class="wrap">
+    <div class="masonry">
+      {%- for img in ['solsticio-invierno.webp', 'closanes-06497.webp', 'lesclosanes_set23-00107.webp', 'closanes-06512.webp', 'lesclosanes_set23-00215.webp', 'closanes-06521.webp', 'lesclosanes_set23-00363.webp', 'lesclosanes_set23-00438.webp', 'lesclosanes_set23-00522.webp', 'lesclosanes_set23-00538.webp', 'lesclosanes_set23-09762.webp', 'lesclosanes_set23-09862.webp'] %}
+      <img class="reveal" data-reveal src="/assets/img/{{ img }}" alt="Masia les Closanes" loading="lazy">
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section news">
+  <div class="wrap news__grid">
+    <div class="news__poster reveal" data-reveal>
+      <img src="/assets/img/brujula-interior-promo.jpeg" alt="La brújula interior" loading="lazy">
+    </div>
+    <div class="news__text">
+      <p class="kicker reveal" data-reveal>{{ r.newsKicker }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ r.newsTitle }}</h2>
+      <p class="lead reveal" data-reveal data-delay="2">{{ r.newsText }}</p>
+      <a class="btn btn--solid reveal" data-reveal data-delay="3" href="{{ 'contact' | purl(lang) }}">{{ r.newsCta }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="mexico" data-parallax-bg="/assets/img/mexico-promo.jpg">
+  <div class="mexico__overlay"></div>
+  <div class="wrap mexico__head">
+    <p class="kicker kicker--light reveal" data-reveal>{{ r.mexicoKicker }}</p>
+    <h2 class="mexico__title reveal" data-reveal data-delay="1">{{ r.mexicoTitle }}</h2>
+  </div>
+</section>
+<section class="section mexico-text">
+  <div class="wrap prose-col">
+    {%- for p in r.mexico %}
+    <p class="reveal" data-reveal>{{ p }}</p>
+    {%- endfor %}
+    <p class="closing-lines reveal" data-reveal>{{ r.closing1 }}<br><em>{{ r.closing2 }}</em></p>
+    <p class="closing-cta reveal" data-reveal><a class="btn btn--solid" href="{{ 'contact' | purl(lang) }}">{{ t.ui.ctaBand.btn }}</a></p>
+  </div>
+</section>

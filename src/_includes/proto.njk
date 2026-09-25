@@ -1,0 +1,92 @@
+{#- Shared layout for the design prototype. Expects `lang` and `pref`. -#}
+{%- set C = proto.config -%}
+{%- set t = proto[lang] -%}
+{%- set classicPage = collections.all | findVersion(C.classicRef[pref], lang) -%}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t[pref].metaTitle }}</title>
+  <meta name="description" content="{{ t[pref].metaDesc }}">
+  <meta name="robots" content="noindex,nofollow">
+  {%- for l in C.languages %}
+  <link rel="alternate" hreflang="{{ l.code }}" href="{{ pref | purl(l.code) }}">
+  {%- endfor %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/prototype.css">
+</head>
+<body class="page-{{ pref }}">
+
+<a class="proto-badge" href="{{ classicPage.url if classicPage else '/' + lang + '/' }}" title="{{ t.ui.classicLink }}">{{ t.ui.badge }}</a>
+<div class="scroll-progress" id="progress"></div>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="{{ 'home' | purl(lang) }}">
+      <img src="/assets/img/logo.webp" alt="" class="nav__logo">
+      <span class="nav__name">Etica_Lab<em>Equilibrium</em></span>
+    </a>
+    <nav class="nav__links" id="navlinks" aria-label="Etica_Lab.Equilibrium">
+      {%- for p in C.nav %}
+      <a href="{{ p | purl(lang) }}"{% if p == pref %} class="is-current" aria-current="page"{% endif %}>{{ t.nav[p] }}</a>
+      {%- endfor %}
+      <a class="nav__cta" href="{{ 'contact' | purl(lang) }}"{% if pref == 'contact' %} aria-current="page"{% endif %}>{{ t.nav.contact }}</a>
+      <div class="langsw" role="navigation" aria-label="{{ t.ui.langLabel }}">
+        {%- for l in C.languages %}
+        <a href="{{ pref | purl(l.code) }}" hreflang="{{ l.code }}" lang="{{ l.code }}" title="{{ l.name }}"{% if l.code == lang %} class="is-active" aria-current="true"{% endif %}>{{ l.code | upper }}</a>
+        {%- endfor %}
+      </div>
+    </nav>
+    <button class="nav__burger" id="burger" aria-label="{{ t.ui.menu }}" aria-controls="navlinks" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+{{ content | safe }}
+</main>
+
+{% if ctaBand %}
+<section class="cta-band">
+  <div class="wrap cta-band__inner reveal" data-reveal>
+    <h2 class="display">{{ t.ui.ctaBand.title }}</h2>
+    <p class="lead">{{ t.ui.ctaBand.text }}</p>
+    <a class="btn btn--solid" href="{{ 'contact' | purl(lang) }}">{{ t.ui.ctaBand.btn }}</a>
+  </div>
+</section>
+{% endif %}
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__col foot__col--brand">
+      <span class="foot__brand">Etica_Lab.Equilibrium</span>
+      <p>{{ t.ui.footerTag }}</p>
+    </div>
+    <nav class="foot__col foot__nav" aria-label="Etica_Lab.Equilibrium">
+      <a href="{{ 'home' | purl(lang) }}">{{ t.nav.home }}</a>
+      {%- for p in C.nav %}
+      <a href="{{ p | purl(lang) }}">{{ t.nav[p] }}</a>
+      {%- endfor %}
+      <a href="{{ 'contact' | purl(lang) }}">{{ t.nav.contact }}</a>
+    </nav>
+    <div class="foot__col foot__contact">
+      <a href="mailto:{{ C.email }}">{{ C.email }}</a>
+      <a href="{{ C.phoneHref }}">{{ C.phone }}</a>
+      <span>{{ t.contact.location }}</span>
+    </div>
+  </div>
+  <div class="wrap foot__bottom">
+    <span>© 2026 Etica_Lab.Equilibrium · {{ t.ui.footerNote }}</span>
+    <span class="foot__langs">
+      {%- for l in C.languages %}
+      <a href="{{ pref | purl(l.code) }}" hreflang="{{ l.code }}"{% if l.code == lang %} class="is-active"{% endif %}>{{ l.name }}</a>
+      {%- endfor %}
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/prototype.js" defer></script>
+</body>
+</html>

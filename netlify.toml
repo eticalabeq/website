@@ -13,3 +13,14 @@
   from = "/"
   to = "/es/"
   status = 302
+
+# Design prototype: /prototype/ opens the Spanish version.
+[[redirects]]
+  from = "/prototype"
+  to = "/prototype/es/"
+  status = 302
+
+[[redirects]]
+  from = "/prototype/"
+  to = "/prototype/es/"
+  status = 302

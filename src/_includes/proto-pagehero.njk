@@ -1,0 +1,13 @@
+{#- Detail-page header. Set `ph` (object with kicker/title/lead) and `heroImg` before including. -#}
+<section class="page-hero">
+  <div class="page-hero__media" data-parallax="0.2">
+    <div class="page-hero__img" style="background-image:url('/assets/img/{{ heroImg }}')"></div>
+  </div>
+  <div class="wrap page-hero__inner">
+    <p class="kicker kicker--light reveal" data-reveal>{{ ph.kicker }}</p>
+    <h1 class="page-hero__title reveal" data-reveal data-delay="1">{{ ph.title }}</h1>
+    {%- if ph.lead %}
+    <p class="page-hero__lead reveal" data-reveal data-delay="2">{{ ph.lead }}</p>
+    {%- endif %}
+  </div>
+</section>

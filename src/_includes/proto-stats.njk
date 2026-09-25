@@ -1,0 +1,6 @@
+{#- Key-facts row. Numeric values count up on scroll (see prototype.js). -#}
+<div class="stats reveal" data-reveal data-delay="3">
+  {%- for s in t.stats %}
+  <div class="stat"><b{% if s.count %} data-count="{{ s.value }}"{% endif %}>{{ s.value }}</b><span>{{ s.label }}</span></div>
+  {%- endfor %}
+</div>

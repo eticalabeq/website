@@ -1,0 +1,59 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'values' | purl(L.code) }}"
+layout: proto.njk
+pref: values
+ctaBand: true
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set v = t.values -%}
+{%- set ph = { "kicker": v.kicker, "title": v.title, "lead": v.lead } -%}
+{%- set heroImg = 'mvv-cover.jpg' -%}
+{% include "proto-pagehero.njk" %}
+
+<section class="section mv">
+  <div class="wrap mv__block">
+    <div class="mv__label reveal" data-reveal><span>01</span>{{ v.mission.label }}</div>
+    <div class="mv__body">
+      <h2 class="display reveal" data-reveal>{{ v.mission.title }}</h2>
+      <p class="lead reveal" data-reveal data-delay="1">{{ v.mission.text }}</p>
+      <p class="mv__statement reveal" data-reveal data-delay="2">{{ v.mission.statement }}</p>
+    </div>
+  </div>
+
+  <div class="wrap mv__block">
+    <div class="mv__label reveal" data-reveal><span>02</span>{{ v.vision.label }}</div>
+    <div class="mv__body">
+      <h2 class="display reveal" data-reveal>{{ v.vision.title }}</h2>
+      <p class="lead reveal" data-reveal data-delay="1">{{ v.vision.text1 }}</p>
+      <blockquote class="pull reveal" data-reveal data-delay="2">{{ v.vision.quote }}</blockquote>
+      <p class="reveal" data-reveal>{{ v.vision.text2 }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section values values--full">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="kicker reveal" data-reveal><span class="kicker__num">03</span> {{ v.valuesLabel }}</p>
+      <h2 class="display reveal" data-reveal data-delay="1">{{ v.valuesTitle }}</h2>
+    </div>
+    {%- set valueImgs = ['0hamon.jpg', 'value-connection.jpg', 'value-relationships.jpg', 'value-art.jpg', 'value-environment.png', 'value-spirituality.jpg'] %}
+    <div class="values__grid">
+      {%- for item in v.items %}
+      <article class="value reveal" data-reveal style="--i:{{ loop.index0 }}">
+        <div class="value__img" style="background-image:url('/assets/img/{{ valueImgs[loop.index0] }}')"></div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.text }}</p>
+        {%- if item.extra %}<p class="value__extra">{{ item.extra }}</p>{% endif %}
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>

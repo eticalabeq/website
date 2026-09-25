@@ -1,0 +1,13 @@
+{#- Contact form (Netlify Forms). Set `formVariant` to "dark" or "light" before including. -#}
+<form class="pform pform--{{ formVariant or 'light' }}" name="contacto" method="POST" action="{{ 'contact' | purl(lang) }}" data-netlify="true" netlify-honeypot="bot-field" data-ajax>
+  <input type="hidden" name="form-name" value="contacto">
+  <input type="hidden" name="idioma" value="{{ lang }}">
+  <p class="pform__hp" aria-hidden="true"><label>Bot <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+  <div class="pform__row">
+    <input type="text" name="nombre" placeholder="{{ t.ui.form.name }}" aria-label="{{ t.ui.form.name }}" autocomplete="name" required>
+    <input type="email" name="email" placeholder="{{ t.ui.form.email }}" aria-label="{{ t.ui.form.email }}" autocomplete="email" required>
+  </div>
+  <textarea name="mensaje" rows="4" placeholder="{{ t.ui.form.message }}" aria-label="{{ t.ui.form.message }}"></textarea>
+  <button class="btn btn--solid" type="submit" data-sending="{{ t.ui.form.sending }}">{{ t.ui.form.submit }}</button>
+  <p class="pform__msg" data-ok="{{ t.ui.form.thanks }}" data-err="{{ t.ui.form.error }}" role="status" aria-live="polite"></p>
+</form>

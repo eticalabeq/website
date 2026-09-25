@@ -1,0 +1,53 @@
+---
+pagination:
+  data: proto.config.languages
+  size: 1
+  alias: L
+permalink: "{{ 'about' | purl(L.code) }}"
+layout: proto.njk
+pref: about
+ctaBand: true
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  lang: "{{ L.code }}"
+---
+{%- set t = proto[lang] -%}
+{%- set a = t.about -%}
+{%- set ph = { "kicker": a.kicker, "title": a.title } -%}
+{%- set heroImg = 'A7_03477.webp' -%}
+{% include "proto-pagehero.njk" %}
+
+<section class="section story">
+  <div class="wrap story__intro">
+    <div class="about__portrait reveal" data-reveal>
+      <img src="/assets/img/167010050_214079807136042_3879363262381485551_n.webp" alt="Elisenda Ferrús Rull">
+      <span class="about__sig">Elisenda</span>
+    </div>
+    <div class="story__introtext">
+      <p class="story__lead reveal" data-reveal data-delay="1">{{ a.lead }}</p>
+      {% include "proto-stats.njk" %}
+    </div>
+  </div>
+
+  <div class="wrap prose-col">
+    {%- for p in a.body %}
+    <p class="reveal" data-reveal>{{ p }}</p>
+    {%- endfor %}
+    <blockquote class="pull reveal" data-reveal>{{ a.pull }}</blockquote>
+    {%- for p in a.after %}
+    <p class="reveal" data-reveal>{{ p }}</p>
+    {%- endfor %}
+  </div>
+</section>
+
+<section class="section duo">
+  <div class="wrap duo__grid">
+    {%- for c in a.cards %}
+    <article class="duo__card reveal" data-reveal data-delay="{{ loop.index0 }}">
+      <span class="duo__num">0{{ loop.index }}</span>
+      <h2>{{ c.title }}</h2>
+      <p>{{ c.text }}</p>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
